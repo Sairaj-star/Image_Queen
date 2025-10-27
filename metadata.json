@@ -1,0 +1,5 @@
+{
+  "name": "Gemini Image Fusion",
+  "description": "An application that allows users to upload two photos, provide a text prompt describing an action or scene, and generate a new image where the two subjects from the photos are interacting as described.",
+  "requestFramePermissions": []
+}
