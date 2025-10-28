@@ -6,14 +6,27 @@ import { ResultDisplay } from './components/ResultDisplay';
 import { generateImage } from './services/geminiService';
 import type { UploadedFile } from './types';
 import { blobToBase64 } from './utils/fileUtils';
+import { LoginPage } from './components/LoginPage';
+
+interface UserData {
+  name: string;
+  email: string;
+}
 
 const App: React.FC = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [image1, setImage1] = useState<UploadedFile | null>(null);
   const [image2, setImage2] = useState<UploadedFile | null>(null);
   const [prompt, setPrompt] = useState<string>('');
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  
+  const handleLogin = (userData: UserData) => {
+    // This will log to the browser's developer console, which is the "terminal" for frontend JS.
+    console.log('User Login Data:', userData);
+    setIsLoggedIn(true);
+  };
 
   const handleGenerate = useCallback(async () => {
     if (!image1 || !image2 || !prompt) {
@@ -52,6 +65,10 @@ const App: React.FC = () => {
   }, [image1, image2, prompt]);
   
   const isButtonDisabled = !image1 || !image2 || !prompt || isLoading;
+
+  if (!isLoggedIn) {
+    return <LoginPage onLogin={handleLogin} />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 font-sans">
